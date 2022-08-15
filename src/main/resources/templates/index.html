@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <style>
+    .arial{
+      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    }
+    .arial::first-letter{
+      font-size: 4rem;
+      color: crimson;
+    }
+    input[type = "text"]{
+      width: 450px;
+      transition: width .5s ease-in;
+    }
+    input[type="submit"]{
+      width: 100px;
+    }
+    h3{
+      font-family: Sans-serif;
+      font-size: 2.5rem;
+    }
+  </style>
+  <title>Time Speaker</title>
+</head>
+<body class="">
+<nav class="navbar navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand fs-2 text-warning px-5 py-2" href="#"><span class="text-danger">Time</span>Speaker</a>
+  </div>
+</nav>
+<div class="container">
+  <div class="row my-5">
+    <h2 class="mt-5 arial text-center">Time Speaker</h2>
+  </div>
+
+  <div class="row justify-content-between">
+    <div class="col-sm-12 col-md-6 col-lg-7 my-5">
+
+      <div class="row my-2">
+        <input class="m-auto rounded form-control py-3" type="text" name="timeText" id="timeText">
+      </div>
+      <div class="row mt-4 justify-content-center">
+        <input class="btn btn-outline-dark py-2 fs-5 mt-4" type="submit" onclick="speak($('#timeText').val())" value="Speak">
+      </div>
+
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-5">
+      <div class="row flex-column text-center my-1">
+        <div class="col">
+          <h3 class="my-3" style="font-weight:bold">&nbsp;</h3>
+        </div>
+        <div class="col mt-4">
+          <img src="./watch.png" width="350px" alt="" srcset="">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<footer class="bg-dark text-center text-light py-3 position-fixed bottom-0 end-0 w-100">
+  copyright &copy;
+</footer>
+</body>
+
+<script>
+  function speak(time) {
+    $.ajax({
+        type: 'POST',
+        url: "/v1/api/speak?time=" + time,
+        contentType: 'application/json',
+        success: function(response) {
+          document.getElementsByTagName('h3')[0].innerHTML = response.spokenTime;
+          document.getElementsByTagName('h3')[0].style.color = '#108806';
+        },
+        error: function(response) {
+          document.getElementsByTagName('h3')[0].innerHTML = response.responseJSON.message;
+          document.getElementsByTagName('h3')[0].style.color = '#d00';
+        }
+    });
+  }
+
+</script>
+</html>
