@@ -59,8 +59,9 @@ public class BritishSpokenTimeServiceImpl extends BaseTimeService implements Spo
         }
 
         // if minutes greater than limit, change hours & minutes value and set the keyword 'TO'
+        // when hours reach to '12', set it back to '1'
         if (minutes > MINUTES_LIMIT) {
-            hours += 1;
+            hours = (hours == 12) ? 1 : hours + 1 ;
             minutes = SIXTY - minutes;
             beforeOrAfter = TO_KEY_WORD;
         }

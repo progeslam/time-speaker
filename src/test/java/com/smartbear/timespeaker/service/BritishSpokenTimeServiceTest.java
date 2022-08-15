@@ -162,4 +162,17 @@ public class BritishSpokenTimeServiceTest {
         Assertions.assertEquals("Eighteen to nine", expectedOutput);
     }
 
+    @Test
+    void speak_twelveAfterThirsty_returnsSuccess() {
+
+        //Given
+        final String time = "12:42";
+
+        //When
+        final String expectedOutput = spokenTimeService.speakTime(time);
+
+        //Then
+        Assertions.assertEquals("Eighteen to one", expectedOutput);
+    }
+
 }
